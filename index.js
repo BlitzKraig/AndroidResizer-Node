@@ -21,7 +21,20 @@ exports.addFolder = () => {
 exports.options = config.defaultOptions;
 
 exports.start = () => {
-    return 'start';
+    var ready = true;
+    _.forOwn(exports.options, function(value, key) {
+        if (value.length === 0) {
+            ready = false;
+
+            return logger.info('Please define option: ' + key);
+        }
+    });
+
+    if (ready) {
+        return logger.info('Options valid. Processing...');
+    } else {
+        return logger.error('Missing options. Aborting.');
+    }
 };
 
 exports.clear = () => {
@@ -31,6 +44,5 @@ exports.clear = () => {
 exports.returnPlatform = () => {
     return _.get(constants, exports.options.platform);
 };
-
 
 var exports = module.exports = {};
