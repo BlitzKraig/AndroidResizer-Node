@@ -1,0 +1,30 @@
+{
+  "name": "androidresizer",
+  "version": "0.0.1",
+  "description": "ARNode",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlitzKraig/AndroidResizer-Node.git"
+  },
+  "keywords": [
+    "android",
+    "mobile",
+    "asset",
+    "resize",
+    "tools"
+  ],
+  "author": "Blitzkraig",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BlitzKraig/AndroidResizer-Node/issues"
+  },
+  "homepage": "https://github.com/BlitzKraig/AndroidResizer-Node#readme",
+  "dependencies": {
+    "jimp": "^0.2.28",
+    "winston": "^2.4.1"
+  }
+}
