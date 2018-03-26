@@ -1,24 +1,35 @@
+var exports = module.exports = {};
+
 const jimp = require('jimp');
 const logger = require('./config/logger');
 const config = require('./config/config.json');
 const constants = require('./config/const.json');
 const _ = require('lodash');
 
+exports.options = config.defaultOptions;
+
 // resizer.addImage(image)
 // resizer.addFolder(folder)
 // resizer.options : {}
 // resizer.start()
 // resizer.clear()
+exports.addImage = (imagePath) => {
+    // Verify file here
+    exports.options.inputFiles.push(imagePath);
 
-exports.addImage = () => {
-    return 'addImage';
+    return logger.info('Added ' + imagePath);
 };
 
 exports.addFolder = () => {
+    // Verify folder contains images, loop through and add here
     return 'addFolder';
 };
 
-exports.options = config.defaultOptions;
+exports.setOutputFolder = (outputPath) => {
+    exports.options.outputFolder = outputPath;
+    
+    return logger.info('Output folder set: ' + outputPath);
+};
 
 exports.start = () => {
     var ready = true;
@@ -31,7 +42,9 @@ exports.start = () => {
     });
 
     if (ready) {
-        return logger.info('Options valid. Processing...');
+        logger.info('Options valid. Processing...');
+    
+        return processFiles();
     } else {
         return logger.error('Missing options. Aborting.');
     }
@@ -42,7 +55,11 @@ exports.clear = () => {
 };
 
 exports.returnPlatform = () => {
-    return _.get(constants, exports.options.platform);
+    return _.get(constants, this.options.platform);
 };
 
-var exports = module.exports = {};
+var processFiles = () => {
+    _.forOwn(exports.options.inputFiles, function(value, key) {
+        logger.info(key + ' : ' + value);
+    });
+};
