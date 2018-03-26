@@ -1,0 +1,21 @@
+{
+"platform" : {
+    "android" : 1
+},
+"density" : {
+    "android" : {
+    "ldpi" : 0,
+    "mdpi" : 1,
+    "hdpi" : 2,
+    "xhdpi" : 3,
+    "xxhdpi" : 4,
+    "xxxhdpi" : 5
+    },
+    "ios" : {
+        "standard" : 0,
+        "2x" : 1,
+        "3x" : 2,
+        "4x" : 3
+    }
+}
+}
