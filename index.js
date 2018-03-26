@@ -1,7 +1,7 @@
 var exports = module.exports = {};
 
 const jimp = require('jimp');
-const logger = require('./config/logger');
+const logger = require('./logger');
 const config = require('./config/config.json');
 const constants = require('./config/const.json');
 const _ = require('lodash');
@@ -27,7 +27,7 @@ exports.addFolder = () => {
 
 exports.setOutputFolder = (outputPath) => {
     exports.options.outputFolder = outputPath;
-    
+
     return logger.info('Output folder set: ' + outputPath);
 };
 
@@ -43,7 +43,7 @@ exports.start = () => {
 
     if (ready) {
         logger.info('Options valid. Processing...');
-    
+
         return processFiles();
     } else {
         return logger.error('Missing options. Aborting.');
@@ -61,5 +61,14 @@ exports.returnPlatform = () => {
 var processFiles = () => {
     _.forOwn(exports.options.inputFiles, function(value, key) {
         logger.info(key + ' : ' + value);
+        var fileName = value.split('/');
+        fileName = fileName[fileName.length - 1];
+        jimp.read(value).then(function (image) { // TODO Loop per density
+            return image.scale(2) // TODO Calculate desired output here
+                 .quality(60)
+                 .write(exports.options.outputFolder+'/'+fileName); // TODO Ensure slash exists in option
+        }).catch(function (err) {
+            console.error(err);
+        });
     });
 };
