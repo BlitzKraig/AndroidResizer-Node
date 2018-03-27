@@ -1,12 +1,13 @@
 {
     "defaultOptions" : {
-        "platform" : "platform.android",
-        "sourceDensity" : "density.mdpi",
+        "platform" : "android",
+        "sourceDensity" : "mdpi",
         "outputDensity" : [
-            "density.hdpi",
-            "density.xhdpi",
-            "density.xxhdpi",
-            "density.xxxhdpi"
+            "ldpi",
+            "hdpi",
+            "xhdpi",
+            "xxhdpi",
+            "xxxhdpi"
         ],
         "outputFolder":"",
         "inputFiles":[]
