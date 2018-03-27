@@ -16,20 +16,34 @@ exports.addImage = (imagePath) => new Promise((res) => {
     return res(logger.info('Added ' + imagePath));
 });
 
-exports.addFolder = (directoryPath) => new Promise((res) => {
-    // Verify folder contains images, loop through and add here
-    fs.readdirSync(directoryPath).forEach(file => {
-        exports.addImage(directoryPath + '/' + file);
-    });
+exports.addFolder = (directoryPath) => new Promise((res, rej) => {
+
+    try {
+        logger.info('Adding folder: ' + directoryPath);
+        // Verify folder contains images, loop through and add here
+        fs.readdirSync(directoryPath).forEach(file => {
+            exports.addImage(directoryPath + '/' + file);
+        });
+    } catch (e) {
+        logger.debug(e);
+
+        return rej(logger.error('Error attempting to add ' + directoryPath));
+    }
 
     return res(logger.info('Folder added'));
 });
 
-exports.setOutputFolder = (outputPath) => {
+exports.setOutputFolder = (outputPath) => new Promise((res, rej) => {
+    try{
     exports.options.outputFolder = outputPath;
+    }catch(e){
+        logger.debug(e);
 
-    return logger.info('Output folder set: ' + outputPath);
-};
+        return rej(logger.error('Error attempting to set output folder to ' + outputPath));
+    }
+
+    return res(logger.info('Output folder set: ' + outputPath));
+});
 
 exports.start = () => new Promise((res, rej) => {
     var ready = true;
@@ -49,11 +63,11 @@ exports.start = () => new Promise((res, rej) => {
     }
 });
 
-exports.clear = () => {
+exports.clear = () => new Promise((res) => {
     exports.options = {};
 
-    return exports.options = config.defaultOptions;
-};
+    return res(exports.options = config.defaultOptions);
+});
 
 exports.returnPlatform = () => {
     return _.get(constants, exports.options.platform);
@@ -76,7 +90,7 @@ var processFiles = () => new Promise((res, rej) => {
             jimp.read(value).then(function(image) {
                 return image.scale(calculateScale(exports.options.sourceDensity, density, exports.options.platform))
                     .quality(60)
-                    .write(exports.options.outputFolder + '/'  + density + '/' + fileName); // TODO Ensure slash exists in option
+                    .write(exports.options.outputFolder + '/' + density + '/' + fileName); // TODO Ensure slash exists in option
             }).catch(function(err) {
                 console.error(err);
 
