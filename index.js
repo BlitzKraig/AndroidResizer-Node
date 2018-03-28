@@ -9,6 +9,51 @@ const _ = require('lodash');
 
 exports.options = config.defaultOptions;
 
+exports.setInputDensity = (density) => new Promise((res, rej) => {
+    if(_.includes(_.get(constants.density, exports.options.platform), density)){
+        logger.info('Density changed to ' + density);
+
+        return res(exports.options.sourceDensity = density);
+    }else{
+        exports.options.sourceDensity = '';
+
+        return rej('Density invalid: ' + density);
+    }
+});
+
+// Add Output Density
+// Set output density
+
+exports.addOutputDensity = (density) => new Promise((res, rej) => {
+    if(_.includes(_.get(constants.density, exports.options.platform), density)){
+        exports.options.outputDensity.push(density);
+        logger.info('Output density added: ' + density);
+
+        return res(logger.info('Current output density list: ' + exports.options.outputDensity));
+    }else{
+
+        return rej('Output density invalid: ' + density);
+    }
+});
+
+exports.clearOutputDensity = () => new Promise((res, rej) =>{
+    return res(exports.options.outputDensity = '');
+});
+
+exports.setOutputDensity = (density) => new Promise((res, rej) => {
+    if(_.includes(_.get(constants.density, exports.options.platform), density)){
+        exports.options.outputDensity = '';
+        exports.options.outputDensity.push(density);
+        logger.info('Output density added: ' + density);
+
+        return res(logger.info('Current output density list: ' + exports.options.outputDensity));
+    }else{
+
+        return rej('Output density invalid: ' + density);
+    }
+});
+
+
 exports.addImage = (imagePath) => new Promise((res) => {
     // Verify file here
     exports.options.inputFiles.push(imagePath);
