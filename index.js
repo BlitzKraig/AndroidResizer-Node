@@ -10,11 +10,12 @@ const _ = require('lodash');
 exports.options = config.defaultOptions;
 
 exports.setInputDensity = (density) => new Promise((res, rej) => {
-    if(_.includes(_.get(constants.density, exports.options.platform), density)){
+    if(_.has(_.get(constants.density, exports.options.platform), density)){
         logger.info('Density changed to ' + density);
 
         return res(exports.options.sourceDensity = density);
     }else{
+        logger.info('Density invalid: ' + density);
         exports.options.sourceDensity = '';
 
         return rej('Density invalid: ' + density);
@@ -25,7 +26,7 @@ exports.setInputDensity = (density) => new Promise((res, rej) => {
 // Set output density
 
 exports.addOutputDensity = (density) => new Promise((res, rej) => {
-    if(_.includes(_.get(constants.density, exports.options.platform), density)){
+    if(_.has(_.get(constants.density, exports.options.platform), density)){
         exports.options.outputDensity.push(density);
         logger.info('Output density added: ' + density);
 
@@ -41,7 +42,7 @@ exports.clearOutputDensity = () => new Promise((res, rej) =>{
 });
 
 exports.setOutputDensity = (density) => new Promise((res, rej) => {
-    if(_.includes(_.get(constants.density, exports.options.platform), density)){
+    if(_.has(_.get(constants.density, exports.options.platform), density)){
         exports.options.outputDensity = '';
         exports.options.outputDensity.push(density);
         logger.info('Output density added: ' + density);

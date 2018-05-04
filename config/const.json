@@ -1,21 +1,21 @@
 {
-"platform" : {
-    "android" : 1
-},
-"density" : {
-    "android" : {
-    "ldpi" : 0.75,
-    "mdpi" : 1,
-    "hdpi" : 1.5,
-    "xhdpi" : 2,
-    "xxhdpi" : 3,
-    "xxxhdpi" : 4
+    "platform": {
+        "android": 1
     },
-    "ios" : {
-        "standard" : 1,
-        "2x" : 2,
-        "3x" : 3,
-        "4x" : 4
+    "density": {
+        "android": {
+            "ldpi": 0.75,
+            "mdpi": 1,
+            "hdpi": 1.5,
+            "xhdpi": 2,
+            "xxhdpi": 3,
+            "xxxhdpi": 4
+        },
+        "ios": {
+            "standard": 1,
+            "2x": 2,
+            "3x": 3,
+            "4x": 4
+        }
     }
-}
 }
